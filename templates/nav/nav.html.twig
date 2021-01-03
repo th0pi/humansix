@@ -1,0 +1,15 @@
+<nav>
+	<div class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="{{ path('home') }}">Humansix</a>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+				{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <li><a class="btn btn-outline-primary" href="{{ path('logout') }}" title="deconnexion">Déconnexion</a></li>
+                {% else %}
+                <li><a class="btn btn-outline-primary" href="{{ path('login') }}" title="connexion">Connexion</a></li>
+            	{% endif %}
+			</ul>
+		</div>
+	</div>
+</nav>

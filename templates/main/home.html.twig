@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{parent()}}
+	| home
+{% endblock %}
+
+{% block body %}
+	{% for order in orders %}
+		<div class="card mb-3" style="width: 100%; background-color: rgb(169,169,169);">
+			<div class="card-body">
+				<h5 class="card-title">Order {{order.id}}</h5>
+				<h6 class="card-subtitle mb-2 text-muted">Status : {{order.status}}</h6>
+                <div>Customer : {{order.customer.firstName}} {{order.customer.lastName}}</div>
+                <div class="mb-2">order date : {{order.orderDate | date("Y-m-d H:i:s")}}</div>
+				<table class="table card-text">
+                <h6>Products</h6>
+					<thead>
+						<tr>
+							<th scope="col">sku</th>
+							<th scope="col">Name</th>
+							<th scope="col">Quantity</th>
+							<th scope="col">Price</th>
+						</tr>
+					</thead>
+					<tbody>
+                    {% set totalPrice = 0 %}
+						{% for product in order.cart %}
+							<tr>
+								<th scope="row">{{product.id}}</th>
+								<td>{{product.sku}}</td>
+								<td>{{product.quantity}}</td>
+								<td>{{product.unitPrice | number_format(2, '.')}}</td>
+                                {% set totalPrice = totalPrice + (product.quantity * product.unitPrice) %}
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+                <h4>Order Price : {{ totalPrice | number_format(2, '.')}}</h4>
+			</div>
+		</div>
+	{% endfor %}
+{% endblock %}
